@@ -1,6 +1,5 @@
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
-import ai_edge_torch
 from ai_edge_torch.generative.utilities import converter
 from ai_edge_torch.generative.utilities.export_config import ExportConfig
 
