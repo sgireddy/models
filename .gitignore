@@ -205,3 +205,19 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# LLM conversion outputs and large artifacts
+*.tflite
+*.onnx
+*.pt
+*.bin
+*.ckpt
+*.safetensors
+checkpoints/
+weights/
+artifacts/
+output/
+outputs/
+tmp/
+medgemma_multimodal_16k/
+
