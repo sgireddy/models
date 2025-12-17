@@ -3,7 +3,13 @@ import json
 import torch
 from huggingface_hub import hf_hub_download, snapshot_download
 from ai_edge_torch.generative.utilities import converter
-from ai_edge_torch.generative.utilities.export_config import ExportConfig
+try:
+    from ai_edge_torch.generative.utilities.export_config import ExportConfig
+except ImportError:
+    try:
+        from ai_edge_torch.generative.export_config import ExportConfig
+    except ImportError:
+        ExportConfig = None
 import ai_edge_torch.generative.layers.model_config as cfg
 from ai_edge_torch.generative.examples.gemma3.decoder import Decoder
 from ai_edge_torch.generative.utilities.loader import ModelLoader
@@ -128,9 +134,10 @@ edge_decoder = edge_decoder.to(torch.bfloat16)
 edge_decoder.eval()
 
 # 5. Export to TFLite using AI Edge converter
-export_cfg = ExportConfig()
-export_cfg.mask_as_input = True
-export_cfg.decode_batch_size = 1
+export_cfg = ExportConfig() if ExportConfig else None
+if export_cfg:
+    export_cfg.mask_as_input = True
+    export_cfg.decode_batch_size = 1
 
 # Monkeypatch KV cache to use bfloat16 to reduce memory and match CPU SDPA
 from ai_edge_torch.generative.layers import kv_cache as kv_utils

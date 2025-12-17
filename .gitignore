@@ -221,3 +221,6 @@ outputs/
 tmp/
 medgemma_multimodal_16k/
 
+# Ignore local virtual environments
+.venv*
+
